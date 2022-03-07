@@ -1,25 +1,62 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class Todo extends Component {
 
-export default App;
+  state = {
+    task:"",
+    taskList: []
+  };
+
+  handleChange = (e) => {
+    this.setState({
+      task: e.target.value
+    })
+  };
+
+  add = (e) => {
+    let {task, taskList} = this.state
+    if (task !== ""){
+      this.setState({
+        taskList: taskList.concat({
+          task: task,
+          id: Date.now()
+        }),        
+      task: ""
+      })
+    };
+  };
+
+  remove = (id) => {
+    let { taskList } = this.state;
+    this.setState({
+      taskList: taskList.filter((item) => item.id !== id)
+    })
+  };
+
+  render(){
+    let {add, remove, handleChange} = this;
+    let {task, taskList,} = this.state;
+
+    return(
+      <form onSubmit={(e) => e.preventDefault()}>
+        <div className='container'>
+          <div className='input'>
+            <input placeholder='Type the task here' value={task} onChange={handleChange}></input>
+            <button onClick={add}>Add task</button>
+          </div>
+          <div className='list'>
+            {taskList.map((item) => 
+              <ul>
+                <li>
+                  {item.task}
+                  <button onClick={() => remove(item.id)}>Remove task</button>
+                </li>
+              </ul>
+            )}
+          </div>
+        </div>      
+      </form>
+    )
+  }
+}
