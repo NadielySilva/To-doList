@@ -41,6 +41,7 @@ export default class Todo extends Component {
     return(
       <form onSubmit={(e) => e.preventDefault()}>
         <div className='container'>
+          <h1>O que temos pra hj?</h1>
           <div className='input'>
             <input placeholder='Type the task here' value={task} onChange={handleChange}></input>
             <button onClick={add}>Add task</button>
@@ -50,7 +51,7 @@ export default class Todo extends Component {
               <ul>
                 <li>
                   {item.task}
-                  <button onClick={() => remove(item.id)}>Remove task</button>
+                  <button onClick={() => remove(item.id)}>Remove</button>
                 </li>
               </ul>
             )}
